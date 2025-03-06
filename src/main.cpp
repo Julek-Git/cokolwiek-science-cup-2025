@@ -14,7 +14,7 @@ std::pair<int, int> make_checkboard(int width, int height, int left_offset, int
     down_offset, int font_size, RenderTexture2D canvas, struct Color white_c, struct Color black_c,
     int checkboard_size = -1);
 
-void draw_menu(int width, int height, float start_x, float start_y, 
+void draw_menu(int width, int height, int pixels_offset, float start_x, float start_y, 
       int font_size, struct Color menu_color, struct Color header_color);
 
 int main() {
@@ -33,15 +33,15 @@ int main() {
   int down_offset = outer_size + size;
   //make_checkboard(screenWidth, screenHeight, chess_board, 20, updown, leftright, WHITE, BLUE);
   draw_frame(screenWidth, screenHeight, size, outer_size, checkboard_texture, BLACK, GREEN);
-  int total_checkboard_size;
+  int checkboard_size;
   int pixels_offset;
-  std::tie(total_checkboard_size, pixels_offset) = make_checkboard(screenWidth, screenHeight, left_offset, down_offset, 20, checkboard_texture, WHITE, BLUE);
+  std::tie(checkboard_size, pixels_offset) = make_checkboard(screenWidth, screenHeight, left_offset, down_offset, 20, checkboard_texture, WHITE, BLUE);
   
   //UI
-  float menu_ui_start_x = outer_size + size + total_checkboard_size;
-  float menu_ui_start_y = outer_size + size + pixels_offset / 2; 
-  int ui_menu_width = screenWidth - 2 * (outer_size + size) - total_checkboard_size;
-  int ui_menu_height = screenHeight - 2 * (outer_size + size) - pixels_offset;
+  float menu_ui_start_x = left_offset + checkboard_size;
+  float menu_ui_start_y = down_offset + pixels_offset / 2; 
+  int ui_menu_width = screenWidth - 2 * (left_offset) - checkboard_size;
+  int ui_menu_height = screenHeight - 2 * (down_offset) - pixels_offset;
 
   GuiSetStyle(DEFAULT, TEXT_PADDING, 0);
   while (!WindowShouldClose()) {
@@ -56,7 +56,7 @@ int main() {
         WHITE
       );
       //ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-      draw_menu(ui_menu_width, ui_menu_height, menu_ui_start_x, menu_ui_start_y,
+      draw_menu(ui_menu_width, ui_menu_height, pixels_offset, menu_ui_start_x, menu_ui_start_y,
       20, ColorFromHSV(15, 0.66f, 0.83f), BLACK);
     EndDrawing();
   }
@@ -64,13 +64,17 @@ int main() {
   CloseWindow();
   return 0;
 }
-void draw_menu(int width, int height, float start_x, float start_y, 
+void draw_menu(int width, int height, int pixels_offset, float start_x, float start_y, 
   int font_size, struct Color menu_color, struct Color header_color)
 {
-  int left_border_size = 0.02 * width;
-  int inner_width = width - left_border_size; //srodek
-  DrawRectangle(start_x - left_border_size, start_y, left_border_size, height, BLACK);
-  DrawRectangle(start_x, start_y, width, height, menu_color);
+  int left_border_size = 0.03 * width;
+  
+  int inner_width = width - left_border_size - pixels_offset;
+  DrawRectangle(start_x, start_y, left_border_size, height, BLACK);
+
+  start_x += left_border_size + pixels_offset / 2; 
+  
+  DrawRectangle(start_x, start_y, inner_width, height, menu_color);
   DrawText("SZACHY", start_x + inner_width / 2 - font_size * 1.5f, start_y, font_size, header_color);
   //GuiLabel(Rectangle{start_x, start_y, 300, 300}, "Siema");
 }
@@ -92,6 +96,8 @@ std::pair<int, int> make_checkboard(int width, int height, int left_offset, int
   down_offset, int font_size, RenderTexture2D canvas, struct Color white_c, struct Color black_c,
   int checkboard_size)
   {
+
+
     if (checkboard_size == -1)
     {
       checkboard_size = 
@@ -102,6 +108,7 @@ std::pair<int, int> make_checkboard(int width, int height, int left_offset, int
     // checkboard_size -= pixelsLeft;
     left_offset += pixelsLeft / 2;
     down_offset += pixelsLeft / 2;
+
     int sq_size = checkboard_size / 8;
   
     bool black = false;
@@ -134,8 +141,8 @@ std::pair<int, int> make_checkboard(int width, int height, int left_offset, int
     }
 
     EndTextureMode();
-    int total_size = checkboard_size + pixelsLeft;
-    return {total_size, pixelsLeft};
+    //int total_size = checkboard_size + pixelsLeft;
+    return {checkboard_size, pixelsLeft};
     // return checkboard_size;
   } 
 
