@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -Iinclude -Wall -O3 --std=c++20 -static
-LDFLAGS = -Llib -lraylib -lopengl32 -lgdi32 -lwinmm
+LDFLAGS = -Llib -lraylib -lopengl32 -lgdi32 -lwinmm 
 
 SRC = $(wildcard src/*.cpp)
 OBJ = $(patsubst src/%.cpp, obj/%.o, $(SRC))
