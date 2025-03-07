@@ -15,7 +15,7 @@ std::pair<int, int> make_checkboard(int width, int height, int left_offset, int
     int checkboard_size = -1);
 
 void draw_menu(int width, int height, int pixels_offset, float start_x, float start_y, 
-      int font_size, struct Color menu_color, struct Color header_color);
+      int font_size, RenderTexture2D canvas, struct Color menu_color, struct Color header_color);
 
 int main() {
   const int screenWidth = 1200;
@@ -57,7 +57,7 @@ int main() {
       );
       //ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
       draw_menu(ui_menu_width, ui_menu_height, pixels_offset, menu_ui_start_x, menu_ui_start_y,
-      20, ColorFromHSV(15, 0.66f, 0.83f), BLACK);
+      20, checkboard_texture, ColorFromHSV(15, 0.45f, 0.83f), BLACK);
     EndDrawing();
   }
 
@@ -65,19 +65,60 @@ int main() {
   return 0;
 }
 void draw_menu(int width, int height, int pixels_offset, float start_x, float start_y, 
-  int font_size, struct Color menu_color, struct Color header_color)
+  int font_size, RenderTexture2D canvas, struct Color menu_color, struct Color header_color)
 {
-  int left_border_size = 0.03 * width;
-  
-  int inner_width = width - left_border_size - pixels_offset;
-  DrawRectangle(start_x, start_y, left_border_size, height, BLACK);
 
+  BeginTextureMode(canvas);
+
+  DrawRectangle(start_x, start_y, left_border_size, height, BLACK);
   start_x += left_border_size + pixels_offset / 2; 
-  
   DrawRectangle(start_x, start_y, inner_width, height, menu_color);
-  DrawText("SZACHY", start_x + inner_width / 2 - font_size * 1.5f, start_y, font_size, header_color);
-  //GuiLabel(Rectangle{start_x, start_y, 300, 300}, "Siema");
+
+
+ 
+  //header
+  DrawRectangle(start_x + header_border_width , 
+    start_y + margin_top_header_text, inner_width - header_border_width * 2
+    , header_border_thickness, BLACK); //border top
+
+  DrawText("SZACHY", start_x + inner_width / 2 - font_size * 1.8f, start_y + 
+    margin_top_header_text * 2, font_size, header_color);
+
+  DrawRectangle(start_x + header_border_width, 
+    start_y + margin_top_header_text * 3 + font_size * 0.8, inner_width - header_border_width * 2,
+     header_border_thickness, BLACK);
+
+  ////////////////////////////
+  //////////////////////////// TIME
+  ////////////////////////////
+  
+
+
+  DrawRectangleRounded();
+
+
+  
+  EndTextureMode(); 
 }
+void draw_time(int width, int height, RenderTexture2D canvas, struct Color color)
+{
+  const char time[6] = "00:00"; //test time
+  
+ 
+  DrawText()
+
+}
+void handle_time(bool first_player)
+{
+
+}
+void update_time(bool first_player)
+{
+
+}
+
+
+
 void draw_frame(int width, int height, int size, int outer_size, RenderTexture2D canvas, struct Color color, struct Color outer_Color)
 {
   BeginTextureMode(canvas);
