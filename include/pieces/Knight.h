@@ -5,7 +5,7 @@
 
 class Knight : public Piece {
 public:
-  Knight(int _x, int _y, bool _color) : Piece(_x, _y, _color) {}
+  Knight(uint8_t _inx, bool _black) : Piece(_inx, _black) {};
 
   // ai generated - will be useful in the future
   // bool canMove(int x, int y) const override {

@@ -5,7 +5,7 @@
 
 class Queen : public Piece {
 public:
-  Queen(int _x, int _y, bool _color) : Piece(_x, _y, _color) {};
+  Queen(uint8_t _inx, bool _black) : Piece(_inx, _black) {};
 };
 
 #endif // Queen_H

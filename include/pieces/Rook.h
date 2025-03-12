@@ -5,7 +5,7 @@
 
 class Rook : public Piece {
 public:
-  Rook(int _x, int _y, bool _color) : Piece(_x, _y, _color) {};
+  Rook(uint8_t _inx, bool _black) : Piece(_inx, _black) {};
 };
 
 #endif // Rook_H

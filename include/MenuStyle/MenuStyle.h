@@ -1,10 +1,10 @@
-#ifndef MenuStyle_h
-#define MenuStyle
+#ifndef MENUSTYLE_H
+#define MENUSTYLE_H
 
 #include <raylib/raylib.h>
 
 class MenuStyle {
-  public:
+  private:
     int width;
     int height;
     int pixels_offset;
@@ -23,8 +23,16 @@ class MenuStyle {
     Color border_color;
     Color timer_background_color;
     Color timer_text_color;
+  public:
+    MenuStyle
+    (
+      int width, int height, 
+      float x, float y, 
+      int pixels_offset,
+      RenderTexture2D& canvas
+    );
 
-    MenuStyle(int width, int height, float x, float y);
+    void draw_menu();
 };
 
-#endif // MenuStyle_h
+#endif  // MenuStyle_h
