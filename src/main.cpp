@@ -4,6 +4,7 @@
 #include "raylib/raygui.h"
 #include <string>
 #include "MenuStyle/MenuStyle.h"
+#include "Game/Game.h"
 
 // void make_checkboard(int width, int height, RenderTexture2D canvas,  int font_size,
 //   float offset_perc_updown[2],
@@ -36,8 +37,8 @@ int main() {
   std::tie(checkboard_size, pixels_offset) = make_checkboard(screenWidth, screenHeight, left_offset, down_offset, 20, checkboard_texture, WHITE, BLUE);
   
   //UI
-  float menu_ui_start_x = left_offset + checkboard_size;
-  float menu_ui_start_y = down_offset + pixels_offset / 2; 
+  int menu_ui_start_x = left_offset + checkboard_size;
+  int menu_ui_start_y = down_offset + pixels_offset / 2; 
   int ui_menu_width = screenWidth - 2 * (left_offset) - checkboard_size;
   int ui_menu_height = screenHeight - 2 * (down_offset) - pixels_offset;
 
@@ -46,7 +47,15 @@ int main() {
   menu_ui_start_x, menu_ui_start_y,
   pixels_offset, checkboard_texture);
 
+    menu_style.header_text_color = BLACK;
+    menu_style.menu_color = ColorFromHSV(332.0f, 1.0f, 0.56f);
+    menu_style.border_color = BLACK;
 
+  Player player1(true,  std::chrono::seconds(5), OfflineHuman, "Siur");
+  Player player2(false,  std::chrono::seconds(2), OfflineHuman, "Siur2");
+  Game game(player1, player2);
+  game.generate_start_pos();
+  game.display_array();
   GuiSetStyle(DEFAULT, TEXT_PADDING, 0);
   while (!WindowShouldClose()) {
     BeginDrawing();
@@ -60,7 +69,7 @@ int main() {
         WHITE
       );
       //ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-
+      menu_style.draw_menu();
     EndDrawing();
   }
 
@@ -135,30 +144,3 @@ std::pair<int, int> make_checkboard(int width, int height, int left_offset, int
     return {checkboard_size, pixelsLeft};
     // return checkboard_size;
   } 
-
-  //I dont know if there will be need for this it depends on future decisions so better to leave it for now
-  //
-  // void make_text_on_checkboard(int width, int height, int sq_size, int left_offset, int
-  //   down_offset, int font_size, RenderTexture2D canvas, struct Color white_c, struct Color black_c)
-  // {
-  //   bool black = true;
-  //   int column_nums = 8;
-  //   char row_letter = 97;
-
-  //   for (int x = left_offset; x < sq_size * 8; x += sq_size)
-  //   {
-  //     const char* cString = std::to_string(column_nums).c_str();
-  //     DrawText(cString, x + sq_size / 6.5, y + sq_size / 5.5, font_size, black ? black_c : white_c);
-
-  //     column_nums--;
-  //     black = !black;
-  //   }
-  //   for (int y = down_offset; y < sq_size * 8; y += sq_size)
-  //   {   
-  //     char str[2] = {row_letter, '\0'};
-  //     DrawText(str, y + sq_size / 1.4, y + sq_size / 1.4, font_size, black ? black_c : white_c);
-
-  //     row_letter++;
-  //     black = !black;
-  //   }
-  // }

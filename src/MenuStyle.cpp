@@ -3,8 +3,8 @@
 
 MenuStyle::MenuStyle(
   int width, int height, 
-  float x, float y, int pixels_offset,
-  RenderTexture2D& canvas
+  int x, int y, int pixels_offset,
+  RenderTexture2D canvas
 ) 
 {
   this->canvas = canvas;
@@ -27,13 +27,12 @@ void MenuStyle::draw_menu()
   int c_x = x;
   int c_y = y;
 
-  DrawRectangle(x, y, 
-    left_border_size, height, BLACK);
-
-  c_x += left_border_size + pixels_offset / 2; 
-
-  DrawRectangle(c_x, c_y, width, canvas.texture.height, menu_color);
-
+  DrawRectangle(x, y, left_border_size, height, BLACK);
+    
+ //c_x += left_border_size + pixels_offset / 2; 
+  c_x += left_border_size + pixels_offset / 2;
+  DrawRectangle(c_x, c_y, width, height, menu_color);
+    //canvas.texture.
 
  
   //header
@@ -57,8 +56,4 @@ void MenuStyle::draw_menu()
 
   
   EndTextureMode(); 
-}
-void draw_time(int width, int height, RenderTexture2D canvas, struct Color color)
-{
-  const char time[6] = "00:00"; //test time
 }

@@ -2,8 +2,9 @@
 #define PLAYER_H
 
 #include <chrono>
+#include <string>
 
-enum class PlayerType
+enum PlayerType
 {
   OfflineHuman,
   AI,
@@ -16,7 +17,7 @@ class Player
     bool black;
     
     PlayerType player_type;
-    char name[15];
+    std::string name;
     int16_t elo; //ranking elo
     int wins;
     int draws;
@@ -26,7 +27,7 @@ class Player
       bool black, 
       std::chrono::seconds time,
       PlayerType player_type,
-      char name[15]
+      std::string name
     );
 };
 #endif

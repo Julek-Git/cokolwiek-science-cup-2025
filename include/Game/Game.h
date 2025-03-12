@@ -32,8 +32,10 @@ class Game {
     King* king;
 
     Game(const Player& p1, const Player& p2);
-  private:
     void generate_start_pos();
+    void display_array();
+  private:
+
 };
 
 

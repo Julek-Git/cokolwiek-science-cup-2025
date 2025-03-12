@@ -1,9 +1,23 @@
 #include "pieces/Pawn.h"
 
-// bool Pawn::validate_move(uint8_t target_inx) 
-// {
+
+void Pawn::move(uint8_t target_inx) 
+{
   
-// }
+}
+
+void Pawn::take(uint8_t target_inx) 
+{
+  
+}
+bool Pawn::validate_move(uint8_t target_inx) 
+{
+  return false;
+}
+bool Pawn::validate_take(uint8_t target_inx) 
+{
+  return false;
+}
 
 
 

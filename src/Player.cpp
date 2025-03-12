@@ -5,7 +5,7 @@ Player::Player
   bool black, 
   std::chrono::seconds time,
   PlayerType player_type,
-  char name[15]
+  std::string name
 )
 {
   this->black = black;

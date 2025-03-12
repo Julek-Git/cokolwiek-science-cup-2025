@@ -6,7 +6,7 @@ class Piece {
   public:
     Piece(uint8_t _inx, bool _black) : inx(_inx), black(_black) {};
     virtual void move(uint8_t target_inx) = 0;
-    void take(uint8_t target_inx) { return move(target_inx); }
+    void take(uint8_t target_inx);
   protected:
     uint8_t inx;
     bool black; // 0 - white, 1 - black

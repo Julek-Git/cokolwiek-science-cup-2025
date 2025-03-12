@@ -8,14 +8,26 @@ class MenuStyle {
     int width;
     int height;
     int pixels_offset;
-    float x;
-    float y;
+    int x;
+    int y;
     int font_size;
     int left_border_size;
     int header_border_thickness;
     int header_border_width;
     int margin_top_header_text;
     RenderTexture2D canvas;
+    
+  public:
+    MenuStyle
+    (
+      int width, int height, 
+      int x, int y, 
+      int pixels_offset,
+      RenderTexture2D canvas
+    );
+    
+    void draw_menu();
+
     Color menu_color;
     bool same_border_style;
     Color header_text_color;
@@ -23,16 +35,6 @@ class MenuStyle {
     Color border_color;
     Color timer_background_color;
     Color timer_text_color;
-  public:
-    MenuStyle
-    (
-      int width, int height, 
-      float x, float y, 
-      int pixels_offset,
-      RenderTexture2D& canvas
-    );
-
-    void draw_menu();
 };
 
 #endif  // MenuStyle_h
