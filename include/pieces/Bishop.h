@@ -5,7 +5,7 @@
 
 class Bishop : public Piece {
 public:
-  Bishop(int _x, int _y, bool _color) : Piece(_x, _y, _color) {};
+  Bishop(int _inx, bool _black) : Piece(_inx, _black) {};
 };
 
 #endif // Bishop_h

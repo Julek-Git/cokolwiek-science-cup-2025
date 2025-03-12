@@ -5,7 +5,13 @@
 
 class Pawn : public Piece {
 public:
-  Pawn(int _x, int _y, bool _color) : Piece(_x, _y, _color) {};
+  Pawn(uint8_t _inx, bool _black) : Piece(_inx, _black) {};
+  void move(uint8_t target_inx) override;
+  void take(uint8_t target_inx);
+
+private:
+  bool validate_move(uint8_t target_inx) override;
+  bool validate_take(uint8_t target_inx) override;
 };
 
 #endif // Pawn_H
