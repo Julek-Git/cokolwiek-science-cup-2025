@@ -4,12 +4,13 @@
 #include <chrono>
 #include <string>
 
-enum PlayerType
+enum class PlayerType
 {
   OfflineHuman,
   AI,
   OnlineHuman
 };
+
 class Player 
 {
   public:

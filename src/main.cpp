@@ -51,8 +51,8 @@ int main() {
     menu_style.menu_color = ColorFromHSV(332.0f, 1.0f, 0.56f);
     menu_style.border_color = BLACK;
 
-  Player player1(true,  std::chrono::seconds(5), OfflineHuman, "Siur");
-  Player player2(false,  std::chrono::seconds(2), OfflineHuman, "Siur2");
+  Player player1(true,  std::chrono::seconds(5), PlayerType::OfflineHuman, "Siur");
+  Player player2(false,  std::chrono::seconds(2), PlayerType::OfflineHuman, "Siur2");
   Game game(player1, player2);
   game.generate_start_pos();
   game.display_array();
