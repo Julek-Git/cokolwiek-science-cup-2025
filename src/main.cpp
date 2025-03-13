@@ -6,6 +6,8 @@
 #include <string>
 #include "MenuStyle/MenuStyle.h"
 #include "Game/Game.h"
+#include "Player/Player.h"
+#include "Player/PlayerOffline.h"
 #include "Game/ActionsAndDrawingManager.h"
 // void make_checkboard(int width, int height, RenderTexture2D canvas,  int font_size,
 //   float offset_perc_updown[2],
@@ -105,8 +107,8 @@ MenuStyle InitUI(int screenWidth, int screenHeight,
 Game InitGame(int checkboard_size, int left_offset, int down_offset)
 {
   ActionsAndDrawingManager aadm(checkboard_size, left_offset, down_offset);
-  Player player1(true,  std::chrono::seconds(5), PlayerType::OfflineHuman, "Siur");
-  Player player2(false,  std::chrono::seconds(2), PlayerType::OfflineHuman, "Siur2");
+  Player* player1 = new PlayerOffline(true, std::chrono::seconds(5), "Siur");
+  Player* player2 = new PlayerOffline(false, std::chrono::seconds(2), "Siur2");
   Game game(player1, player2, aadm);
   game.generate_start_pos();
   game.display_array();

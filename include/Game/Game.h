@@ -1,6 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
-#include <Game/Player.h>
+#include "Player/Player.h"
 #include <Game/ActionsAndDrawingManager.h>
 
 
@@ -26,13 +26,14 @@ class Bond
 
 class Game {
   public:
-    Player player1;
-    Player player2;
+    Player* player1;
+    Player* player2;
     
     std::array<std::unique_ptr<Piece>, 64> chessboard;
     King* king;
 
-    Game(const Player& p1, const Player& p2, const ActionsAndDrawingManager& aadm);
+    Game(Player* p1, Player* p2
+      ,const ActionsAndDrawingManager& _aadm) : player1(p1), player2(p2), aadm(_aadm) {};
     void generate_start_pos();
     void display_array();
     void draw_loop();
