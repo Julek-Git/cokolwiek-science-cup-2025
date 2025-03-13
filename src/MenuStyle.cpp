@@ -4,12 +4,14 @@
 MenuStyle::MenuStyle(
   int width, int height, 
   int x, int y, int pixels_offset,
-  RenderTexture2D canvas
-) 
+  RenderTexture2D canvas,
+  ScreenInfo _screen_info
+) : screen_info(_screen_info)
 {
   this->canvas = canvas;
   this->width = width;
   this->height = height;
+  this->pixels_offset = pixels_offset;
   this->x = x;
   this->y = y; 
 
@@ -28,14 +30,14 @@ void MenuStyle::draw_menu()
 
   int c_x = x;
   int c_y = y;
-
+  
   DrawRectangle(x, y, left_border_size, height, BLACK);
     
  //c_x += left_border_size + pixels_offset / 2; 
   c_x += left_border_size + pixels_offset / 2;
   DrawRectangle(c_x, c_y, width, height, menu_color);
     //canvas.texture.
-
+  
  
   //header
   DrawRectangle(c_x + header_border_width , 

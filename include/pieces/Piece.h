@@ -3,10 +3,12 @@
 
 #include <cstdint>
 #include "raylib/raylib.h"
+#include <iostream>
 
 class Piece {
   public:
     Piece(uint8_t _inx, bool _black) : inx(_inx), is_black(_black) {};
+    
     virtual void move(uint8_t target_inx) = 0;
     void take(uint8_t target_inx);
     virtual Texture2D get_texture() = 0;

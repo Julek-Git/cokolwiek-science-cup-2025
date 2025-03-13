@@ -2,7 +2,7 @@
 #define MENUSTYLE_H
 
 #include <raylib/raylib.h>
-
+#include "Game/ScreenInfo.h"
 
 class MenuStyle {
   private:
@@ -24,12 +24,14 @@ class MenuStyle {
       int width, int height, 
       int x, int y, 
       int pixels_offset,
-      RenderTexture2D canvas
+      RenderTexture2D canvas,
+      ScreenInfo _screen_info
     );
     
     void draw_menu();
     RenderTexture2D get_canvas();
 
+    ScreenInfo screen_info;
     Color menu_color;
     bool same_border_style;
     Color header_text_color;

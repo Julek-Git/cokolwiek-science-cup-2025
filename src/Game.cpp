@@ -12,7 +12,7 @@ void Game::generate_start_pos()
     chessboard[i] = std::make_unique<Pawn>(i, false);
     chessboard[63 - i] = std::make_unique<Pawn>(63 - i, true);
   }
-
+  //chessboard[7] = std::make_unique<Pawn>(7, true);
   // for (int j = 0; j < 5; j += 3)
   // {
   //   chessboard[j] = std::make_unique<Rook>(false);
@@ -31,9 +31,9 @@ void Game::generate_start_pos()
 }
 void Game::draw_loop()
 {
-  BeginDrawing();
+  //BeginDrawing();
     aadm.DrawPieces(chessboard);
-  EndDrawing();
+  //EndDrawing();
 }
 void Game::display_array()
 {
