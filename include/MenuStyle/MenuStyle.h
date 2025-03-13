@@ -3,6 +3,7 @@
 
 #include <raylib/raylib.h>
 
+
 class MenuStyle {
   private:
     int width;
@@ -27,6 +28,7 @@ class MenuStyle {
     );
     
     void draw_menu();
+    RenderTexture2D get_canvas();
 
     Color menu_color;
     bool same_border_style;

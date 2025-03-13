@@ -20,6 +20,8 @@ MenuStyle::MenuStyle(
   header_border_width = 0.01 * width;
   margin_top_header_text = 0.03 * width;
 }
+RenderTexture2D MenuStyle::get_canvas() { return canvas; }
+
 void MenuStyle::draw_menu()
 {
   BeginTextureMode(canvas);

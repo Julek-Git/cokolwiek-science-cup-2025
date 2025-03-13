@@ -19,6 +19,22 @@ bool Pawn::validate_take(uint8_t target_inx)
   return false;
 }
 
+Texture2D Pawn::get_texture() { return texture; }
+ 
+void Pawn::set_texture()
+{
+  Image image;
+  if (is_black) {
+    image = LoadImage("../Assets/Sprites/Pieces/Normal/Black/Pawn.png");
+
+  }
+  else {
+    image = LoadImage("../Assets/Sprites/Pieces/Normal/White/Pawn.png");
+  }
+  texture = LoadTextureFromImage(image);
+  UnloadImage(image);
+}
+
 
 
 

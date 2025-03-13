@@ -1,8 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 #include <Game/Player.h>
+#include <Game/ActionsAndDrawingManager.h>
 
-#include <pieces/Piece.h>
+
 #include <pieces/King.h>
 #include <pieces/Queen.h>
 #include <pieces/Rook.h>
@@ -10,7 +11,7 @@
 #include <pieces/Knight.h>
 #include <pieces/Pawn.h>
 
-#include <array>
+
 #include <chrono>
 
 class Bond
@@ -27,15 +28,16 @@ class Game {
   public:
     Player player1;
     Player player2;
-
+    
     std::array<std::unique_ptr<Piece>, 64> chessboard;
     King* king;
 
-    Game(const Player& p1, const Player& p2);
+    Game(const Player& p1, const Player& p2, const ActionsAndDrawingManager& aadm);
     void generate_start_pos();
     void display_array();
+    void draw_loop();
   private:
-
+    ActionsAndDrawingManager aadm;
 };
 
 

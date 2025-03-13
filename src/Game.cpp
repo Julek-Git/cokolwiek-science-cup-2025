@@ -1,8 +1,9 @@
 #include <Game/Game.h>
 #include <iostream>
 
-Game::Game(const Player& p1, const Player& p2) 
-: player1(p1), player2(p2) 
+Game::Game(const Player& p1, const Player& p2, 
+  const ActionsAndDrawingManager& _aadm) 
+: player1(p1), player2(p2), aadm(_aadm)
 {
   
 };
@@ -33,6 +34,12 @@ void Game::generate_start_pos()
   // chessboard[63 - 3] = std::make_unique<King>(true);
   
   
+}
+void Game::draw_loop()
+{
+  BeginDrawing();
+    aadm.DrawPieces(chessboard);
+  EndDrawing();
 }
 void Game::display_array()
 {
