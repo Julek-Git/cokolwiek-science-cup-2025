@@ -24,6 +24,7 @@ class MenuStyle {
       int width, int height, 
       int x, int y, 
       int pixels_offset,
+      int font_size,
       RenderTexture2D canvas,
       ScreenInfo _screen_info
     );

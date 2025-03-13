@@ -99,7 +99,7 @@ MenuStyle InitUI(int screenWidth, int screenHeight,
   MenuStyle menu_style(
   ui_menu_width, ui_menu_height,
   menu_ui_start_x, menu_ui_start_y,
-  pixels_offset, checkboard_texture, screen_info);
+  pixels_offset, 20, checkboard_texture, screen_info);
 
     menu_style.header_text_color = BLACK;
     menu_style.menu_color = ColorFromHSV(332.0f, 1.0f, 0.56f);

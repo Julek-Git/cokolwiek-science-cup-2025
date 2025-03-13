@@ -4,6 +4,7 @@
 MenuStyle::MenuStyle(
   int width, int height, 
   int x, int y, int pixels_offset,
+  int font_size,
   RenderTexture2D canvas,
   ScreenInfo _screen_info
 ) : screen_info(_screen_info)
@@ -14,6 +15,7 @@ MenuStyle::MenuStyle(
   this->pixels_offset = pixels_offset;
   this->x = x;
   this->y = y; 
+  this->font_size = font_size;
 
   left_border_size = 0.03 * width;
   this->width = width - left_border_size - pixels_offset;
@@ -55,8 +57,6 @@ void MenuStyle::draw_menu()
   //////////////////////////// TIME
   ////////////////////////////
   
-
-
 
   
   EndTextureMode(); 
