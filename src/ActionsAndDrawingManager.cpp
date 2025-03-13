@@ -64,6 +64,8 @@ uint8_t ActionsAndDrawingManager::DrawPieces(
     
   //   // DrawTexture(texture, pos_x, pos_y, WHITE);   
   // }
+
+  return 0;
 }
 
 // uint8_t ActionsAndDrawingManager::ConvertToInx(int x, int y)

@@ -1,12 +1,6 @@
 #include <Game/Game.h>
 #include <iostream>
 
-Game::Game(const Player& p1, const Player& p2, 
-  const ActionsAndDrawingManager& _aadm) 
-: player1(p1), player2(p2), aadm(_aadm)
-{
-  
-};
 void Game::generate_start_pos()
 {
   for (int k = 0; k < 64; k++)
