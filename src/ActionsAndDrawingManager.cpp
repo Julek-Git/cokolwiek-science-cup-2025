@@ -31,8 +31,9 @@ uint8_t ActionsAndDrawingManager::ConvertToInx(int x, int y)
 }
 std::pair<int, int> ActionsAndDrawingManager::ConvertToXY(int inx)
 {
-  int pos_x = inx % 8 * sq_size + checkboard_sx + sq_size / 4.75;
-  int pos_y = checkboard_ey - inx / 8 * sq_size - sq_size / 1.25;
+  int pos_x = inx % 8 * sq_size + checkboard_sx;
+  int pos_y = checkboard_ey - inx / 8 * sq_size - sq_size;
+  //centrowanie fotki
 
   return {pos_x, pos_y};
 }
@@ -46,7 +47,10 @@ uint8_t ActionsAndDrawingManager::DrawPieces(
   {
     if (chessboard[j] == nullptr) continue;  
     Texture2D texture = chessboard[j]->get_texture();
+    // std::cout << sq_size << " " << texture.width << " " << texture.height << std::endl; 
     std::tie(pos_x, pos_y) = ConvertToXY(j);  
+    pos_x += (sq_size - texture.width) / 2;
+    pos_y += (sq_size - texture.height) / 2;
     DrawTexture(texture, pos_x, pos_y, WHITE);  
     
     //DrawRectangle(pos_x, pos_y, 50, 50, YELLOW);

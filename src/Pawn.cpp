@@ -1,9 +1,5 @@
 #include "pieces/Pawn.h"
 
-Pawn::Pawn(uint8_t _inx, bool _black) : Piece(_inx, _black)
-{
-  set_texture();
-}
 void Pawn::move(uint8_t target_inx) 
 {
   
@@ -22,21 +18,7 @@ bool Pawn::validate_take(uint8_t target_inx)
   return false;
 }
 
-Texture2D Pawn::get_texture() { return texture; }
- 
-void Pawn::set_texture()
-{
-  Image image;
-  if (is_black) {
-    image = LoadImage("Assets/Sprites/Pieces/Normal/Black/Pawn.png");
-  }
-  else {
-    image = LoadImage("Assets/Sprites/Pieces/Normal/White/Pawn.png");
-  }
-  ImageResize(&image, 50, 50);
-  texture = LoadTextureFromImage(image);
-  UnloadImage(image);
-}
+
 
 
 
