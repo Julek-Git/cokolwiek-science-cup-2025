@@ -5,13 +5,12 @@
 
 class King : public Piece {
   public:
-    uint8_t inx;
-    
-    King(uint8_t inx, bool _color) : Piece(inx, _color, 'K',
-      { 
-        static_cast<Dirs>(Up + Down + Left + Right),
-        static_cast<Dirs>(Up + Down + Left + Right)
-      }) {}
-};
+    King(uint8_t _inx, bool _black);
+    void move(uint8_t target_inx) override;
+    void take(uint8_t target_inx);
+  private:
+    bool validate_move(uint8_t target_inx) override;
+    bool validate_take(uint8_t target_inx) override;
+  };
 
 #endif // King_H

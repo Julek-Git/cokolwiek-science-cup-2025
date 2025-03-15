@@ -5,15 +5,17 @@
 #include <array>
 #include <memory>
 #include <iostream>
-#include "Game/ScreenInfo.h"
 class Game;
 
 class ActionsAndDrawingManager
 {
   
   public:
-    ActionsAndDrawingManager(Game* _game, int _checkboard_size, int _checkboard_x,  int _checkboard_y,
-    ScreenInfo _screen_info, string _pieces_theme);
+    ActionsAndDrawingManager(Game* _game, 
+      int _checkboard_size, 
+      int _checkboard_x,  
+      int _checkboard_y, 
+      string _pieces_theme);
     // checkboard_size(_checkboard_size), 
     // checkboard_sx(_checkboard_x), 
     // checkboard_sy(_checkboard_y) {};
@@ -34,7 +36,6 @@ class ActionsAndDrawingManager
     std::array<std::unique_ptr<Piece>, 64>* chessboard;
     Piece* active_piece;
 
-    ScreenInfo screen_info;
     string pieces_theme;
     uint8_t ConvertToInx(int x, int y); //konwersja z współrzędnych
     //kliknięcia do indeksu pola na szachownicy

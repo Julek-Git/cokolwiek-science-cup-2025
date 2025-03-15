@@ -2,6 +2,8 @@
 
 uint8_t Piece::counter = 0;
 
+DimensionsInfo Piece::dim_info = 0;
+
 string Piece::pieces_theme = "Normal";
 
 Piece::Piece(uint8_t _inx, bool _black, 
@@ -28,7 +30,8 @@ void Piece::set_texture(string filename)
   else {
     image = LoadImage(w_path.c_str());
   }
-  ImageResize(&image, image.width / 8.5, image.height / 8.5);
+  int sq_size = dim_info.get_chessboard_size() / 8;
+  ImageResize(&image, image.width / (sq_size / 12), image.height / (sq_size / 12));
   texture = LoadTextureFromImage(image);
   UnloadImage(image);
 }
@@ -48,7 +51,7 @@ void Piece::generate_move_array(
       for (; chessboard[_x] == nullptr && _x > -1; _x--);
       move_array[2] = std::make_pair(Left, _x);
     }
-    if (piece_dirs[0] & (Up + Down) < 2) //jeśli Up lub Down
+    if (piece_dirs[0] & (Up | Down) < 2) //jeśli Up lub Down
     {
       int8_t _y = inx;
       for (; chessboard[_y] == nullptr && _y * 8 < 64; _y += 8);
@@ -59,58 +62,43 @@ void Piece::generate_move_array(
     }
     if (piece_dirs[1] > 0) //jesli obydwa skosy  
     {
-      int8_t _x = (int8_t)inx % 8;
-      int8_t _y = (int8_t)inx / 8;
-      uint8_t counter = 0;
-      while (chessboard[(_y + 1) * 8 + (_x + 1)] == nullptr
-      && _x + 1 < 8 && (_y + 1) * 8 < 64)
-      {
-        _x++;
-        _y++;
-        counter++;
-      }
-      move_array[5] = std::make_pair(static_cast<Dirs>(Up + Right), counter);
+      int8_t dx[4] {-1, 1, -1, 1};
+      int8_t dy[4] {1, 1, -1, -1};
 
-      _x = inx % 8;
-      _y = inx / 8;
-      counter = 0;
-      while (chessboard[(_y - 1) * 8 + (_x - 1)] == nullptr
-      && _x - 1 > -1 && (_y - 1) * 8 > -1)
-      {
-        _x--;
-        _y--;
-        std::cout << _x << std::endl;
-        std::cout << _y << std::endl;
-        counter++;
-      }
-      move_array[6] = std::make_pair(static_cast<Dirs>(Down + Left), counter);
+      Dirs dir_map[4] = {
+        static_cast<Dirs>(Up + Left), 
+        static_cast<Dirs>(Up + Right), 
+        static_cast<Dirs>(Down + Left),
+        static_cast<Dirs>(Down + Right)};
 
-      _x = inx % 8;
-      _y = inx / 8;
-      counter = 0;
-      while (chessboard[(_y + 1) * 8 + (_x - 1)] == nullptr
-        && _x - 1 > -1 && (_y + 1) * 8 < 64)
-      {
-        _x--;
-        _y++;
-        counter++;
-      }
+      int8_t start_x = (int8_t)inx % 8;
+      int8_t start_y = (int8_t)inx / 8;
 
-      move_array[4] = std::make_pair(static_cast<Dirs>(Up + Left), counter);
-    
-      _x = inx % 8;
-      _y = inx / 8;
-      counter = 0;
-      while (chessboard[(_y - 1) * 8 + (_x + 1)] == nullptr
-        && _x + 1 < 8 && (_y - 1) * 8 > -1)
+      for (int i = 0; i < 4; i++)
       {
-        _x++;
-        _y--;
-        counter++;
+        uint8_t counter = 0;
+        int8_t _x = start_x;
+        int8_t _y = start_y;
+
+        while (true)
+        {
+            _x += dx[i];
+            _y += dy[i];
+
+            if (_x < 0 || _x >= 8 || _y < 0 || _y >= 8)
+                break;
+
+            int _inx = _y * 8 + _x;
+            
+            if (chessboard[_inx] != nullptr)
+                break;
+
+            counter++;
+        }
+        move_array[4 + i] = std::make_pair(dir_map[i], counter);
       }
-      move_array[7] = std::make_pair(static_cast<Dirs>(Down + Right), counter);
     }
-  }  
+  }
 }
 void Piece::display_move_array()
 {

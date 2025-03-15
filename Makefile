@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Iinclude -Wall -O3 --std=c++20 -static
+CXXFLAGS = -g -Iinclude -Wall -O3 --std=c++20 -static
 
 ifeq ($(OS),Windows_NT)
 	LDFLAGS = -Llib/win -lraylib -lopengl32 -lgdi32 -lwinmm

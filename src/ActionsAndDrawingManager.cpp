@@ -1,16 +1,14 @@
 #include <Game/ActionsAndDrawingManager.h>
-#include <Game/ScreenInfo.h>
 #include "Game/Game.h"
 
 ActionsAndDrawingManager::ActionsAndDrawingManager(
   Game* _game, 
   int _checkboard_size, int _checkboard_x,  
-  int _checkboard_y,
-  ScreenInfo _screen_info, 
+  int _checkboard_y, 
   string _pieces_theme) : 
   checkboard_size(_checkboard_size), checkboard_sx(_checkboard_x),
-  checkboard_sy(_checkboard_y), screen_info(_screen_info),
-  pieces_theme(_pieces_theme), game(_game)
+  checkboard_sy(_checkboard_y), pieces_theme(_pieces_theme), 
+  game(_game)
 {
   chessboard = game->get_chessboard();
   checkboard_ex = checkboard_sx + checkboard_size;

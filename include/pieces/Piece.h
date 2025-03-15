@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include "raylib/raylib.h"
+#include "MenuStyle/DimensionsInfo.h"
 #include <iostream>
 #include <string>
 #include <memory>
@@ -35,6 +36,8 @@ class Piece {
     void generate_move_array(
       std::array<std::unique_ptr<Piece>, 64> &chessboard);
     void display_move_array();
+    static void set_dim_info(DimensionsInfo _dim_info)
+    { dim_info = _dim_info; };
   protected:
     uint8_t inx;
     bool is_black; // 0 - white, 1 - black
@@ -43,6 +46,7 @@ class Piece {
     uint8_t id = 0;
     static string pieces_theme;
     std::array<Dirs, 2> piece_dirs;
+    static DimensionsInfo dim_info;
     //LeftRightUpDown UpRightDownLeft
 
     std::array<std::pair<Dirs, uint8_t>, 8> move_array;
