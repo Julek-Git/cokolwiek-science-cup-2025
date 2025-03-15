@@ -5,7 +5,7 @@
 
 class Bishop : public Piece {
 public:
-  Bishop(uint8_t _inx, bool _black) : Piece(_inx, _black) {};
+  Bishop(uint8_t _inx, bool _black);
   void move(uint8_t target_inx) override;
   void take(uint8_t target_inx);
 

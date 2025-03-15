@@ -27,7 +27,7 @@ void draw_frame(int width, int height, int size, int inner_size, RenderTexture2D
 std::pair<int, int> make_checkboard(int width, int height, int left_offset, int
     down_offset, int font_size, RenderTexture2D canvas, struct Color white_c, struct Color black_c,
     int checkboard_size = -1);
-Game InitGame(int checkboard_size, int left_offset, int down_offset, ScreenInfo screen_info);
+Game* InitGame(int checkboard_size, int left_offset, int down_offset, ScreenInfo screen_info);
 MenuStyle InitUI(int screenWidth, int screenHeight, RenderTexture2D checkboard_texture,
 CheckboardData &checkboard_data,
 ScreenInfo screen_info);
@@ -47,28 +47,31 @@ int main() {
   //Init Game
   MenuStyle menu_style = InitUI(screenWidth, screenHeight, checkboard_texture, checkboard_data, screen_info);
   
-  Game game = InitGame(checkboard_data.checkboard_size, checkboard_data.left_offset,
+  Game* game = InitGame(checkboard_data.checkboard_size, checkboard_data.left_offset,
      checkboard_data.down_offset, screen_info);
-
+  
+  //std::cout << game << std::endl;
   while (!WindowShouldClose()) {
-    BeginDrawing();
+      BeginDrawing();
+  
+        ClearBackground(RAYWHITE);
+  
+        menu_style.draw_menu();
+  
+        DrawTextureRec(
+          menu_style.get_canvas().texture, 
+          Rectangle{0, 0, (float)checkboard_texture.texture.width, (float)-checkboard_texture.texture.height },
+          Vector2{0, 0}, 
+          WHITE
+        );
+        
+        game->draw_loop();
+        //game->debug_func();
+  
+      EndDrawing();
+    }
 
-      ClearBackground(RAYWHITE);
-
-      menu_style.draw_menu();
-
-      DrawTextureRec(
-        menu_style.get_canvas().texture, 
-        Rectangle{0, 0, (float)checkboard_texture.texture.width, (float)-checkboard_texture.texture.height },
-        Vector2{0, 0}, 
-        WHITE
-      );
-      
-      game.draw_loop();
-
-    EndDrawing();
-  }
-
+  
   CloseWindow();
   return 0;
 }
@@ -109,15 +112,23 @@ MenuStyle InitUI(int screenWidth, int screenHeight,
   checkboard_data.down_offset += pixels_offset / 2;
   return menu_style;
 }
-Game InitGame(int checkboard_size, int left_offset, int down_offset, 
+Game* InitGame(int checkboard_size, int left_offset, int down_offset, 
 ScreenInfo screen_info)
 {
-  ActionsAndDrawingManager aadm(checkboard_size, left_offset, down_offset, screen_info);
+ 
   Player* player1 = new PlayerOffline(true, std::chrono::seconds(5), "Siur");
   Player* player2 = new PlayerOffline(false, std::chrono::seconds(2), "Siur2");
-  Game game(player1, player2, aadm);
-  game.generate_start_pos();
+  Game* game = new Game(player1, player2);
+
+
+  ActionsAndDrawingManager* aadm = new ActionsAndDrawingManager(game,
+     checkboard_size, left_offset, 
+     down_offset, screen_info, 
+     "RealisticFunny");
+  game->set_aadm(aadm);
+  //game->generate_start_pos();
   //game.display_array();
+  //std::cout << &aadm << std::endl;
   return game;
 }
 void draw_frame(int width, int height, int size, int outer_size, RenderTexture2D canvas, struct Color color, struct Color outer_Color)

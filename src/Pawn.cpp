@@ -1,5 +1,13 @@
 #include "pieces/Pawn.h"
 
+Pawn::Pawn(uint8_t _inx, bool _black) : 
+Piece(_inx, _black, 'P', 
+  { 
+    static_cast<Dirs>(Up),
+    static_cast<Dirs>(0)
+  }) {};
+
+
 void Pawn::move(uint8_t target_inx) 
 {
   
