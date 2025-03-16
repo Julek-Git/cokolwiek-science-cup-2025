@@ -50,7 +50,8 @@ void Piece::generate_move_array(
     int pos_x = start_pos_x;
     int pos_y = start_pos_y;
     const int sq_size = aadm->get_sq_size();
-    std::cout << "start_pox_y: " << start_pos_y << std::endl;
+    // std::cout << "start_pox_x: " << start_pos_x << std::endl;
+    // std::cout << "inx: " << (int)inx << "symbol: " << symbol << std::endl;
     if (piece_dirs[0] > 1) //jeśli Left lub Right
     {
       uint8_t counter = 0;
@@ -83,7 +84,7 @@ void Piece::generate_move_array(
     if (piece_dirs[0] & (Up | Down) < 4) //jeśli Up lub Down
     {
       uint8_t counter = 0;
-      int8_t _y = inx += 8;
+      int8_t _y = inx + 8;
       while (chessboard[_y] == nullptr && _y < 64 && _y > 0)
       {
         _y += 8;
@@ -95,7 +96,8 @@ void Piece::generate_move_array(
       }
       move_array[0] = std::make_pair(Down, counter);
       pos_y = start_pos_y;
-      _y = inx -= 8;
+      _y = inx - 8;
+      std::cout << "Y: " << (int)_y << std::endl;
       counter = 0;
       while (chessboard[_y] == nullptr && _y < 64 && _y > 0)
       {
