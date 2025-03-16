@@ -3,12 +3,15 @@
 
 #include <cstdint>
 #include "raylib/raylib.h"
-#include "MenuStyle/DimensionsInfo.h"
+#include "MenuStyle/StyleInfo.h"
 #include <iostream>
 #include <string>
 #include <memory>
 #include <array>
 #include <tuple>
+// #include "Game/ActionsAndDrawingManager.h"
+
+class ActionsAndDrawingManager;
 
 using string = std::string;
 
@@ -34,10 +37,11 @@ class Piece {
     std::array<std::pair<Dirs, uint8_t>, 8>
     get_move_array() { return move_array; };
     void generate_move_array(
-      std::array<std::unique_ptr<Piece>, 64> &chessboard);
+      std::array<Piece*, 64>& chessboard,
+    ActionsAndDrawingManager* aadm, RenderTexture2D &pos_moves_text);
     void display_move_array();
-    static void set_dim_info(DimensionsInfo _dim_info)
-    { dim_info = _dim_info; };
+    static void set_style_info(StyleInfo* _style_info)
+    { style_info = _style_info; };
   protected:
     uint8_t inx;
     bool is_black; // 0 - white, 1 - black
@@ -46,7 +50,7 @@ class Piece {
     uint8_t id = 0;
     static string pieces_theme;
     std::array<Dirs, 2> piece_dirs;
-    static DimensionsInfo dim_info;
+    static StyleInfo* style_info;
     //LeftRightUpDown UpRightDownLeft
 
     std::array<std::pair<Dirs, uint8_t>, 8> move_array;
