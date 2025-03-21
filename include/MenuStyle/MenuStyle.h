@@ -13,7 +13,7 @@ class MenuStyle {
     int font_size;
     int left_border_size;
     int header_border_thickness;
-    int header_border_width;
+    int header_border_marginLR;
     int margin_top_header_text;
     RenderTexture2D canvas;
     
@@ -28,6 +28,7 @@ class MenuStyle {
     );
     
     void draw_menu();
+    void draw_ingame_menu();
     RenderTexture2D get_canvas();
 
     Color menu_color;
