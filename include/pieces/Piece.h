@@ -35,7 +35,7 @@ class Piece {
     Texture2D get_texture() { return texture; };
     static void set_pieces_theme(string v) {pieces_theme = v;}
     std::array<std::pair<Dirs, uint8_t>, 8>
-    get_move_array() { return move_array; };
+    get_move_array() { return move_dirs_arr; };
     void generate_move_array(
       std::array<Piece*, 64>& chessboard,
     ActionsAndDrawingManager* aadm, RenderTexture2D &pos_moves_text);
@@ -53,7 +53,8 @@ class Piece {
     static StyleInfo* style_info;
     //LeftRightUpDown UpRightDownLeft
 
-    std::array<std::pair<Dirs, uint8_t>, 8> move_array;
+    std::array<std::pair<Dirs, uint8_t>, 8> move_dirs_arr;
+    std::array<bool, 64> move_arr;
     //Up Down Left Right UpLeft UpRight DownLeft DownRight
 
     
