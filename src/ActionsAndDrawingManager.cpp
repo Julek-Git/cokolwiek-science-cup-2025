@@ -19,16 +19,16 @@ ActionsAndDrawingManager::ActionsAndDrawingManager(
   //std::cout << "Jestem w " << game << " i jestem: " << this << std::endl;
   pos_move_texr = LoadRenderTexture(checkboard_size, checkboard_size);  
 };
-std::pair<bool, RenderTexture2D> ActionsAndDrawingManager::ProcessClick(int x, int y)
+std::tuple<bool, RenderTexture2D*> ActionsAndDrawingManager::ProcessClick(int x, int y)
 {
   if (x < checkboard_ex && y < checkboard_ey && x > checkboard_sx && y > checkboard_sy)
-    process_action(ConvertToInx(x, y));
-  else return {false, pos_move_texr};
-  return {true, pos_move_texr};
+    return {process_action(ConvertToInx(x, y)), &pos_move_texr};
+  else return {false, &pos_move_texr};
   //std::cout << this << std::endl;
 }
 void ActionsAndDrawingManager::draw_pos_move_texr()
 {
+  //std::cout << pos_move_texr.texture.id << std::endl;
   DrawTextureRec(
     pos_move_texr.texture, 
     Rectangle{0, 0, (float)checkboard_size, (float)-checkboard_size },
@@ -42,14 +42,15 @@ void ActionsAndDrawingManager::clear_texture()
     ClearBackground(BLANK); 
   EndTextureMode();
 }
-void ActionsAndDrawingManager::process_action(uint8_t inx)
+bool ActionsAndDrawingManager::process_action(uint8_t inx)
 {
   Piece* potential_piece = (*chessboard)[inx];
-  if (potential_piece == nullptr) return;
+  if (potential_piece == nullptr) return false;
 
   active_piece = potential_piece;
   //std::cout << "Nie jestem nullem tylko: " << potential_piece << std::endl;
-  active_piece->generate_move_array(*chessboard, this, pos_move_texr);
+  game->calc_moves(*chessboard, this, inx);
+  return true;
 }
 uint8_t ActionsAndDrawingManager::ConvertToInx(int x, int y)
 {
@@ -61,7 +62,7 @@ uint8_t ActionsAndDrawingManager::ConvertToInx(int x, int y)
   //std::cout << "square_pos_y: " << square_pos_y << std::endl;
   //3 4 
   uint8_t inx = 8 * square_pos_y + square_pos_x;
-  //std::cout << (int)inx << std::endl;
+  //std::cout << "Inx: " << (int)inx << std::endl;
   return inx;
 }
 std::pair<int, int> ActionsAndDrawingManager::ConvertToXY(int inx)
@@ -96,11 +97,15 @@ void ActionsAndDrawingManager::draw_pos_move(int x, int y)
   // const int size = 0.5 * sq_size;
   // int pos_x = x + sq_size - size / 2;
   // int pos_y = y + sq_size - size / 2;
+  //std::cout << "Dziala" << std::endl;
+  BeginTextureMode(pos_move_texr);
   const int center = 0.1 * sq_size;
-  const int radius = 0.35 * sq_size;
+  const int radius = 0.2 * sq_size;
   int pos_x = x + center;
   int pos_y = y + center;
-  DrawCircle(pos_x, pos_y, radius, GREEN);
+
+  DrawCircle(pos_x, pos_y, radius, GRAY);
+  EndTextureMode();
 }
 // uint8_t ActionsAndDrawingManager::draw_pos_moves(uint8_t inx,
 //   std::array<std::pair<Dirs, uint8_t>, 8>)

@@ -15,6 +15,7 @@ class ActionsAndDrawingManager;
 
 using string = std::string;
 
+
 enum Dirs
 {
   None = 0b0,
@@ -36,13 +37,17 @@ class Piece {
     static void set_pieces_theme(string v) {pieces_theme = v;}
     std::array<std::pair<Dirs, uint8_t>, 8>
     get_move_array() { return move_dirs_arr; };
-    void generate_move_array(
-      std::array<Piece*, 64>& chessboard,
-    ActionsAndDrawingManager* aadm, RenderTexture2D &pos_moves_text);
     void display_move_array();
     static void set_style_info(StyleInfo* _style_info)
     { style_info = _style_info; };
-  protected:
+    char get_symbol() {return symbol;}
+    bool get_isblack() {return is_black;}
+    std::array<std::pair<Dirs, uint8_t>, 8>* get_movedirssarray() {return &move_dirs_arr;}
+    std::array<bool, 64>* get_movearray() {return &move_arr;}
+    std::array<Dirs, 2> get_piecedirs() {return piece_dirs;}
+
+    protected:
+   
     uint8_t inx;
     bool is_black; // 0 - white, 1 - black
     Texture2D texture;
@@ -51,10 +56,11 @@ class Piece {
     static string pieces_theme;
     std::array<Dirs, 2> piece_dirs;
     static StyleInfo* style_info;
+    
+    std::array<bool, 64> move_arr;
     //LeftRightUpDown UpRightDownLeft
 
     std::array<std::pair<Dirs, uint8_t>, 8> move_dirs_arr;
-    std::array<bool, 64> move_arr;
     //Up Down Left Right UpLeft UpRight DownLeft DownRight
 
     

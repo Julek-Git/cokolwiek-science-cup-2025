@@ -37,12 +37,16 @@ class Game {
     void draw_loop();
     std::array<Piece*, 64>*
     get_chessboard() {return &chessboard; };
+    void calc_moves(
+      std::array<Piece*, 64> chessboard, 
+      ActionsAndDrawingManager* aadm, 
+      uint8_t inx);
     void debug_func();
     void delete_mem();
   private:
     ActionsAndDrawingManager* aadm;
     bool piece_active = false;
-    RenderTexture2D pos_move_texr;
+    RenderTexture2D* pos_move_texr;
    
 };
 

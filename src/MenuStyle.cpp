@@ -31,9 +31,7 @@ void MenuStyle::draw_menu()
   int c_x = x;
   int c_y = y;
   
-  DrawRectangle(x, y, left_border_size, height, BLACK);
-    
- //c_x += left_border_size + pixels_offset / 2; 
+  DrawRectangle(x, y, left_border_size, height, BLACK); 
   c_x += left_border_size + pixels_offset / 2;
   DrawRectangle(c_x, c_y, width, height, menu_color);
     //canvas.texture.
@@ -63,6 +61,8 @@ void MenuStyle::draw_ingame_menu()
 {
   BeginTextureMode(canvas);
   
+  int p_x = x;
+  int p_y = y;
   EndTextureMode();
 }
 
