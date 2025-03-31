@@ -45,7 +45,26 @@ void ActionsAndDrawingManager::clear_texture()
 bool ActionsAndDrawingManager::process_action(uint8_t inx)
 {
   Piece* potential_piece = (*chessboard)[inx];
-  if (potential_piece == nullptr) return false;
+  if (active_piece != nullptr)
+  {
+    if  ((*active_piece->get_movearray())[inx] >= true)
+    {
+      (*chessboard)[active_piece->inx] = nullptr;
+      active_piece->inx = inx;
+      (*chessboard)[inx] = active_piece;
+      if ((*active_piece->get_movearray())[inx] == 2)
+      {
+        
+      }
+      active_piece = nullptr; //14:42 panini salami 31.03.2025
+      game->increment_movecount();
+    }
+    //std::cout << "Warunek: " << (int)((*active_piece->get_movearray())[inx] == true) << "inx: " << (int)inx << std::endl;
+    //display_move_array(active_piece->get_movearray());
+   
+    return false;
+  }
+  else if (potential_piece == nullptr) return false;
 
   active_piece = potential_piece;
   //std::cout << "Nie jestem nullem tylko: " << potential_piece << std::endl;
@@ -75,16 +94,15 @@ std::pair<int, int> ActionsAndDrawingManager::ConvertToXY(int inx)
   return {pos_x, pos_y};
 }
 
-uint8_t ActionsAndDrawingManager::DrawPieces(
-  std::array<Piece*, 64> &chessboard)
+uint8_t ActionsAndDrawingManager::DrawPieces()
 {
   int pos_x = 0;
   int pos_y = 0;
 
-  for (int j = 0; j < chessboard.size(); j++)
+  for (int j = 0; j < (*chessboard).size(); j++)
   {
-    if (chessboard[j] == nullptr) continue;  
-    Texture2D texture = chessboard[j]->get_texture();
+    if ((*chessboard)[j] == nullptr) continue;  
+    Texture2D texture = (*chessboard)[j]->get_texture();
     std::tie(pos_x, pos_y) = ConvertToXY(j);  
     pos_x += (sq_size - texture.width) / 2;
     pos_y += (sq_size - texture.height) / 2;
@@ -106,6 +124,18 @@ void ActionsAndDrawingManager::draw_pos_move(int x, int y)
 
   DrawCircle(pos_x, pos_y, radius, GRAY);
   EndTextureMode();
+}
+void ActionsAndDrawingManager::display_move_array( std::array<bool, 64>* move_arr)
+{
+  for (int i = 0; i < 64; i++)
+  {
+    if (i % 8 == 0)
+    {
+      std::cout << std::endl;
+      //std::cout << i << ". ";
+    }
+    std::cout << " " << (bool)(*move_arr)[i];
+  }
 }
 // uint8_t ActionsAndDrawingManager::draw_pos_moves(uint8_t inx,
 //   std::array<std::pair<Dirs, uint8_t>, 8>)

@@ -42,13 +42,15 @@ class Piece {
     { style_info = _style_info; };
     char get_symbol() {return symbol;}
     bool get_isblack() {return is_black;}
+    uint8_t inx;
     std::array<std::pair<Dirs, uint8_t>, 8>* get_movedirssarray() {return &move_dirs_arr;}
     std::array<bool, 64>* get_movearray() {return &move_arr;}
     std::array<Dirs, 2> get_piecedirs() {return piece_dirs;}
-
+    bool is_calced = false;
+    int l_movecount = 0;
     protected:
    
-    uint8_t inx;
+    
     bool is_black; // 0 - white, 1 - black
     Texture2D texture;
     char symbol;

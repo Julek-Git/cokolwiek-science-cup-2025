@@ -43,11 +43,20 @@ class Game {
       uint8_t inx);
     void debug_func();
     void delete_mem();
+    int get_round() {return movecount;}
+    void increment_movecount() 
+    {
+      movecount++;
+      is_black_move = !is_black_move;
+    }
+
+    bool is_black_move = false;
   private:
     ActionsAndDrawingManager* aadm;
     bool piece_active = false;
     RenderTexture2D* pos_move_texr;
-   
+    int movecount = 0;
+    void clear_movearrays(std::array<bool, 64>*);
 };
 
 

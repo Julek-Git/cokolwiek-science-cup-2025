@@ -12,6 +12,10 @@ Piece::Piece(uint8_t _inx, bool _black,
  inx(_inx), is_black(_black), id(counter++), 
  symbol(_symbol), piece_dirs(_piece_dirs)
 {
+  for (int i = 0; i < move_arr.size(); i++)
+  {
+    move_arr[i] = false;
+  }
   for (int i = 0; i < move_dirs_arr.size(); i++)
   {
     move_dirs_arr[i] = std::make_pair(None, (uint8_t)0);

@@ -23,7 +23,7 @@ class ActionsAndDrawingManager
     // checkboard_sy(_checkboard_y) {};
     
     std::tuple<bool, RenderTexture2D*> ProcessClick(int x, int y);
-    uint8_t DrawPieces(std::array<Piece* , 64> &chessboard);
+    uint8_t DrawPieces();
     string get_pieces_theme() {return pieces_theme; };
     void set_pieces_theme(string v) { pieces_theme = v; };
     uint8_t draw_pos_moves
@@ -56,6 +56,7 @@ class ActionsAndDrawingManager
     //uint8_t DrawPossibleMoves(std::array<uint8_t, 64>);
     uint8_t DrawMovementThings();
     uint8_t ProcessAction(uint8_t inx);
+    void display_move_array( std::array<bool, 64>* move_arr);
     bool process_action(uint8_t inx);
   };
 
