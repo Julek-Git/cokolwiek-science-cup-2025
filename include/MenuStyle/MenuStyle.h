@@ -20,14 +20,14 @@ class MenuStyle {
     int p_y;
     int menu_width;
     int menu_height;
-/*
+
     int mode_srcl_in = 0;
     bool usrnm1_edit = false;
     bool usrnm2_edit = false;
     bool ip_edit = false;
     bool ip_port_edit = false;
     const int usrnm_size = 20;
-*/
+
   public:
     MenuStyle
     (
@@ -45,6 +45,9 @@ class MenuStyle {
     void draw_outgame_menu_gui();
     void draw_gamestat_menu();
     void draw_gamestat_menu_gui();
+    void settings_window();
+    void draw_settings();
+    void draw_settings_gui();
     RenderTexture2D get_canvas();
 
     Color menu_color;
@@ -54,7 +57,7 @@ class MenuStyle {
     Color border_color;
     Color timer_background_color;//
     Color timer_text_color;//
-/*
+
     Color ui_background = {200, 200, 200, 30};
     Color ui_background2 = {142, 0, 66, 255};//kolor menu
     Color ui_background3 = {250, 200, 200, 255};
@@ -69,6 +72,7 @@ class MenuStyle {
     bool button_quit_pressed = false;
     bool button_game_pressed = false;
     int mode_act = 0;
+    RenderTexture2D texture;
     //const int usrnm_size = 20;
     char usrnm1[20] = "User1";
     char usrnm2[20] = "User2";
@@ -77,7 +81,8 @@ class MenuStyle {
     char * Time1 = "00:00";
     char * Time2 = "00:00";
     bool moving1 = true;
-    bool win1 = true;*/
+    bool win1 = true;
+    bool end_draw = false;
 };
 
 #endif  // MenuStyle_h
