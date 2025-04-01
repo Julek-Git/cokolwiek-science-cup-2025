@@ -59,6 +59,8 @@ int main() {
         ClearBackground(RAYWHITE);
   
         menu_style->draw_menu();
+        menu_style->draw_outgame_menu();
+
 
         DrawTextureRec(
           menu_style->get_canvas().texture, 
@@ -70,6 +72,9 @@ int main() {
         game->draw_loop();
         
         //game->debug_func();
+
+        menu_style->set_gui_style();
+        menu_style->draw_outgame_menu_gui();
   
       EndDrawing();
     }

@@ -19,16 +19,16 @@ ActionsAndDrawingManager::ActionsAndDrawingManager(
   //std::cout << "Jestem w " << game << " i jestem: " << this << std::endl;
   pos_move_texr = LoadRenderTexture(checkboard_size, checkboard_size);  
 };
-std::pair<bool, RenderTexture2D> ActionsAndDrawingManager::ProcessClick(int x, int y)
+std::tuple<bool, RenderTexture2D*> ActionsAndDrawingManager::ProcessClick(int x, int y)
 {
   if (x < checkboard_ex && y < checkboard_ey && x > checkboard_sx && y > checkboard_sy)
-    process_action(ConvertToInx(x, y));
-  else return {false, pos_move_texr};
-  return {true, pos_move_texr};
+    return {process_action(ConvertToInx(x, y)), &pos_move_texr};
+  else return {false, &pos_move_texr};
   //std::cout << this << std::endl;
 }
 void ActionsAndDrawingManager::draw_pos_move_texr()
 {
+  //std::cout << pos_move_texr.texture.id << std::endl;
   DrawTextureRec(
     pos_move_texr.texture, 
     Rectangle{0, 0, (float)checkboard_size, (float)-checkboard_size },
@@ -42,14 +42,34 @@ void ActionsAndDrawingManager::clear_texture()
     ClearBackground(BLANK); 
   EndTextureMode();
 }
-void ActionsAndDrawingManager::process_action(uint8_t inx)
+bool ActionsAndDrawingManager::process_action(uint8_t inx)
 {
   Piece* potential_piece = (*chessboard)[inx];
-  if (potential_piece == nullptr) return;
+  if (active_piece != nullptr)
+  {
+    if  ((*active_piece->get_movearray())[inx] >= true)
+    {
+      (*chessboard)[active_piece->inx] = nullptr;
+      active_piece->inx = inx;
+      (*chessboard)[inx] = active_piece;
+      if ((*active_piece->get_movearray())[inx] == 2)
+      {
+        
+      }
+      active_piece = nullptr; //14:42 panini salami 31.03.2025
+      game->increment_movecount();
+    }
+    //std::cout << "Warunek: " << (int)((*active_piece->get_movearray())[inx] == true) << "inx: " << (int)inx << std::endl;
+    //display_move_array(active_piece->get_movearray());
+   
+    return false;
+  }
+  else if (potential_piece == nullptr) return false;
 
   active_piece = potential_piece;
   //std::cout << "Nie jestem nullem tylko: " << potential_piece << std::endl;
-  active_piece->generate_move_array(*chessboard, this, pos_move_texr);
+  game->calc_moves(*chessboard, this, inx);
+  return true;
 }
 uint8_t ActionsAndDrawingManager::ConvertToInx(int x, int y)
 {
@@ -61,7 +81,7 @@ uint8_t ActionsAndDrawingManager::ConvertToInx(int x, int y)
   //std::cout << "square_pos_y: " << square_pos_y << std::endl;
   //3 4 
   uint8_t inx = 8 * square_pos_y + square_pos_x;
-  //std::cout << (int)inx << std::endl;
+  //std::cout << "Inx: " << (int)inx << std::endl;
   return inx;
 }
 std::pair<int, int> ActionsAndDrawingManager::ConvertToXY(int inx)
@@ -74,16 +94,15 @@ std::pair<int, int> ActionsAndDrawingManager::ConvertToXY(int inx)
   return {pos_x, pos_y};
 }
 
-uint8_t ActionsAndDrawingManager::DrawPieces(
-  std::array<Piece*, 64> &chessboard)
+uint8_t ActionsAndDrawingManager::DrawPieces()
 {
   int pos_x = 0;
   int pos_y = 0;
 
-  for (int j = 0; j < chessboard.size(); j++)
+  for (int j = 0; j < (*chessboard).size(); j++)
   {
-    if (chessboard[j] == nullptr) continue;  
-    Texture2D texture = chessboard[j]->get_texture();
+    if ((*chessboard)[j] == nullptr) continue;  
+    Texture2D texture = (*chessboard)[j]->get_texture();
     std::tie(pos_x, pos_y) = ConvertToXY(j);  
     pos_x += (sq_size - texture.width) / 2;
     pos_y += (sq_size - texture.height) / 2;
@@ -96,11 +115,27 @@ void ActionsAndDrawingManager::draw_pos_move(int x, int y)
   // const int size = 0.5 * sq_size;
   // int pos_x = x + sq_size - size / 2;
   // int pos_y = y + sq_size - size / 2;
+  //std::cout << "Dziala" << std::endl;
+  BeginTextureMode(pos_move_texr);
   const int center = 0.1 * sq_size;
-  const int radius = 0.35 * sq_size;
+  const int radius = 0.2 * sq_size;
   int pos_x = x + center;
   int pos_y = y + center;
-  DrawCircle(pos_x, pos_y, radius, GREEN);
+
+  DrawCircle(pos_x, pos_y, radius, GRAY);
+  EndTextureMode();
+}
+void ActionsAndDrawingManager::display_move_array( std::array<bool, 64>* move_arr)
+{
+  for (int i = 0; i < 64; i++)
+  {
+    if (i % 8 == 0)
+    {
+      std::cout << std::endl;
+      //std::cout << i << ". ";
+    }
+    std::cout << " " << (bool)(*move_arr)[i];
+  }
 }
 // uint8_t ActionsAndDrawingManager::draw_pos_moves(uint8_t inx,
 //   std::array<std::pair<Dirs, uint8_t>, 8>)

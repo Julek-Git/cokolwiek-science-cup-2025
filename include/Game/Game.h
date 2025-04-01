@@ -37,13 +37,26 @@ class Game {
     void draw_loop();
     std::array<Piece*, 64>*
     get_chessboard() {return &chessboard; };
+    void calc_moves(
+      std::array<Piece*, 64> chessboard, 
+      ActionsAndDrawingManager* aadm, 
+      uint8_t inx);
     void debug_func();
     void delete_mem();
+    int get_round() {return movecount;}
+    void increment_movecount() 
+    {
+      movecount++;
+      is_black_move = !is_black_move;
+    }
+
+    bool is_black_move = false;
   private:
     ActionsAndDrawingManager* aadm;
     bool piece_active = false;
-    RenderTexture2D pos_move_texr;
-   
+    RenderTexture2D* pos_move_texr;
+    int movecount = 0;
+    void clear_movearrays(std::array<bool, 64>*);
 };
 
 
