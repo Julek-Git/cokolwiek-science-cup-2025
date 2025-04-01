@@ -8,11 +8,16 @@ public:
 	PlayerOnline(
     bool is_black, 
     std::chrono::seconds time,
-    std::string name
-  ) : Player(is_black, time, name) {};
+    std::string name,
+    std::string _ip,
+    int _port
+  ) : Player(is_black, time, name), ip(_ip), port(_port) {};
 
   void make_move() override;
-  
+
+private:
+  std::string ip;
+  int port;
 };
 
 
