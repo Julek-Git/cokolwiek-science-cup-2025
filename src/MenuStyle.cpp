@@ -3,6 +3,7 @@
 #define RAIGUI_IMPLEMENTATION
 #include <raylib/raygui.h>
 #include <string>
+#include <regex>
 
 MenuStyle::MenuStyle(
   int width, int height, 
@@ -126,6 +127,10 @@ char * Time2 = "00:00";
 bool moving1 = true;
 bool win1 = true;
 bool end_draw = false;
+std::regex ip_pat(
+  "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}"
+  "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+);
 
 void MenuStyle::set_gui_style(){
   GuiSetStyle(DEFAULT, TEXT_SIZE, font_size);
@@ -244,8 +249,12 @@ void MenuStyle::draw_outgame_menu_gui(){
         usrnm2_edit =!usrnm2_edit;
       DrawText("Podaj IP i port", c_x + header_border_marginLR, c_y + 14*header_border_marginLR + 13*font_size, font_size, ui_text);
       if (GuiTextBox((Rectangle){c_x + header_border_marginLR, c_y + 15*header_border_marginLR + 14*font_size,
-        menu_width*0.7-header_border_marginLR, font_size+2*header_border_marginLR}, ip, 15, ip_edit))
+        menu_width*0.7-header_border_marginLR, font_size+2*header_border_marginLR}, ip, 15, ip_edit)){
         ip_edit =!ip_edit;
+        if (std::regex_match(ip, ip_pat))
+          *ip = (char) "192.168.1.1";
+      }
+        
       if (GuiValueBox((Rectangle){c_x + 0*header_border_marginLR + menu_width*0.7, c_y + 15*header_border_marginLR + 14*font_size,
         menu_width*0.3-header_border_marginLR, font_size+2*header_border_marginLR}, "", &ip_port, 1025, 99999, ip_port_edit))
         ip_port_edit =!ip_port_edit;
@@ -553,7 +562,7 @@ void MenuStyle::draw_gamestat_menu()
         DrawText(std::to_string((long)ip_port).c_str(), c_x + 250 ,c_y + 2*font_size +2*header_border_marginLR, font_size, ui_text);
         DrawText("Ping", c_x ,c_y + 3*font_size +3*header_border_marginLR, font_size, ui_text);
         DrawText(std::to_string((long)ping).c_str(), c_x + 250 ,c_y + 3*font_size +3*header_border_marginLR, font_size, ui_text);
-        DrawText("Czas odpowiedzi", c_x +250 ,c_y + 4*font_size +4*header_border_marginLR, font_size, ui_text);
+        DrawText("Czas odpowiedzi", c_x ,c_y + 4*font_size +4*header_border_marginLR, font_size, ui_text);
         DrawText(std::to_string((long)resp_time).c_str(), c_x + 250, c_y + 4*font_size +4*header_border_marginLR , font_size, ui_text);
       break;
     }
