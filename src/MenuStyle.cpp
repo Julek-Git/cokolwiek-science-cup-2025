@@ -249,8 +249,10 @@ void MenuStyle::draw_outgame_menu_gui(){
       if (GuiTextBox((Rectangle){c_x + header_border_marginLR, c_y + 15*header_border_marginLR + 14*font_size,
         menu_width*0.7-header_border_marginLR, font_size+2*header_border_marginLR}, ip, 15, ip_edit)){
         ip_edit =!ip_edit;
-        if (std::regex_match(ip, ip_pat))
-          *ip = (char) "192.168.1.1";
+        if (std::regex_match(ip, ip_pat)) {
+          char newip[16] = "192.168.1.1";
+          memcpy(ip, newip, 16);
+        }
       }
         
       if (GuiValueBox((Rectangle){c_x + 0*header_border_marginLR + menu_width*0.7, c_y + 15*header_border_marginLR + 14*font_size,
