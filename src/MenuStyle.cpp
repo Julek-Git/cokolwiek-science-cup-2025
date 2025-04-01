@@ -249,8 +249,12 @@ void MenuStyle::draw_outgame_menu_gui(){
       if (GuiTextBox((Rectangle){c_x + header_border_marginLR, c_y + 15*header_border_marginLR + 14*font_size,
         menu_width*0.7-header_border_marginLR, font_size+2*header_border_marginLR}, ip, 15, ip_edit)){
         ip_edit =!ip_edit;
-        if (std::regex_match(ip, ip_pat))
-          *ip = (char) "192.168.1.1";
+        if (std::regex_match(ip, ip_pat)) {
+          char tmp_str[16] = "192.168.1.1";
+          for (int i = 0; i < 16; i++) {
+            ip[i] = tmp_str[i];
+          }
+        }
       }
         
       if (GuiValueBox((Rectangle){c_x + 0*header_border_marginLR + menu_width*0.7, c_y + 15*header_border_marginLR + 14*font_size,
@@ -280,11 +284,9 @@ void MenuStyle::draw_outgame_menu_gui(){
 void MenuStyle::draw_ingame_menu()
 {
   BeginTextureMode(canvas);
-<<<<<<< HEAD
   
   int p_x = x;
   int p_y = y;
-=======
   int c_x = p_x;
   int c_y = p_y;
 
@@ -349,7 +351,6 @@ void MenuStyle::draw_ingame_menu()
     menu_width/2 - 1.5*header_border_marginLR -2*header_border_thickness, menu_height * 0.125 - 1.5*header_border_marginLR -2*header_border_thickness,
     ui_background2);
 */
->>>>>>> menu
   EndTextureMode();
   
 }
