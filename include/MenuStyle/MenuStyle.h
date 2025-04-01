@@ -76,7 +76,7 @@ class MenuStyle {
     //const int usrnm_size = 20;
     char usrnm1[20] = "User1";
     char usrnm2[20] = "User2";
-    char ip[15] = "192.168.1.1";
+    char ip[16] = "192.168.1.1";
     int ip_port = 37777;
     char * Time1 = "00:00";
     char * Time2 = "00:00";
